@@ -1,0 +1,2 @@
+thoughtspot-rest-api-v1
+mcp 
