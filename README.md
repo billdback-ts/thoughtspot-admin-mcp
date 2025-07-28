@@ -79,7 +79,7 @@ Add the following configuration to your `claude_desktop_config.json`:
       "command": "python",
       "args": [
         "/path/to/thoughtspot-admin-mcp/thoughtspot_admin_mcp.py",
-        "--tsurl", "https://your-thoughtspot-server.com",
+        "--tsurl", "https://your-thoughtspot-server.cloud",
         "--username", "your-username",
         "--token", "your-api-token"
       ]
@@ -88,9 +88,11 @@ Add the following configuration to your `claude_desktop_config.json`:
 }
 ```
 
+NOTE that you will likely need to specify the full path to your Python environment that has the requirements installed.  
+
 **Replace the following values:**
 - `/path/to/thoughtspot-admin-mcp/`: Full path to this repository
-- `https://your-thoughtspot-server.com`: Your ThoughtSpot server URL
+- `https://your-thoughtspot-server.cloud`: Your ThoughtSpot server URL
 - `your-username`: Your ThoughtSpot username
 - `your-api-token`: Your ThoughtSpot API token
 
@@ -141,7 +143,7 @@ Find all objects that haven't been accessed in the last 30 days
 You can test the connection to your ThoughtSpot instance:
 
 ```bash
-python thoughtspot_admin_mcp.py --tsurl https://your-server.com --username your-username --token your-token --test
+python thoughtspot_admin_mcp.py --tsurl https://your-server.cloud --username your-username --token your-token --test
 ```
 
 This will fetch all liveboards and answers and output them as JSON.
@@ -151,7 +153,7 @@ This will fetch all liveboards and answers and output them as JSON.
 For development or debugging:
 
 ```bash
-python thoughtspot_admin_mcp.py --tsurl https://your-server.com --username your-username --token your-token
+python thoughtspot_admin_mcp.py --tsurl https://your-server.cloud --username your-username --token your-token
 ```
 
 ## Requirements
