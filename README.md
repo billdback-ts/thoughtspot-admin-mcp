@@ -5,10 +5,12 @@ A Model Context Protocol (MCP) server that provides ThoughtSpot administrative c
 ## Features
 
 - **Metadata Search**: Search across all ThoughtSpot metadata types with filtering capabilities
+- **User & Group Management**: List, search, and manage users and groups
 - **Advanced Filtering**: Filter by metadata type, author, tags, and other criteria
 - **Pagination Support**: Handle large result sets with offset and limit parameters
 - **Usage Analytics**: Access view counts and last access timestamps
 - **Content Governance**: Analyze content distribution and tagging strategies
+- **Permission Management**: Add and remove users from groups
 
 ## Available Tools
 
@@ -33,6 +35,62 @@ Searches ThoughtSpot metadata objects with flexible filtering options.
 - Associated tags
 - Usage statistics (views, last access)
 - Object descriptions
+
+### `list-users`
+
+Lists ThoughtSpot users with optional filtering capabilities.
+
+**Parameters:**
+- `user_identifier` (optional): Filter by user identifier (username/email)
+- `display_name` (optional): Filter by display name
+- `name_pattern` (optional): Filter by name pattern (supports wildcards like 'Bill*')
+- `email` (optional): Filter by email address
+- `group_identifiers` (optional): Filter by group identifiers (users who belong to these groups)
+- `offset` (optional): Record offset for pagination (default: 0)
+- `limit` (optional): Maximum number of records to return (default: 100, max: 1000)
+
+**Note:** At least one filter must be provided (user_identifier, display_name, name_pattern, email, or group_identifiers).
+
+**Returns:**
+- User ID, name, and display name
+- Email address and account status
+- Account type and privileges
+- Group memberships and inherited groups
+- Creation and modification timestamps
+
+### `list-groups`
+
+Lists ThoughtSpot groups with optional filtering and user inclusion.
+
+**Parameters:**
+- `display_name` (optional): Filter by group display name
+- `group_identifier` (optional): Filter by group identifier
+- `name_pattern` (optional): Filter by name pattern (supports wildcards)
+- `include_users` (optional): Include users in each group (default: false)
+- `include_sub_groups` (optional): Include sub-groups (default: false)
+- `offset` (optional): Record offset for pagination (default: 0)
+- `limit` (optional): Maximum number of records to return (default: 100, max: 1000)
+
+**Returns:**
+- Group ID, name, and display name
+- Group description and type
+- System group status and privileges
+- List of users in the group (if include_users=true)
+- Creation and modification timestamps
+
+### `manage-user-groups`
+
+Adds or removes users from groups in ThoughtSpot.
+
+**Parameters:**
+- `username` (required): Username/email of the user to manage
+- `operation` (required): Operation to perform - "ADD" to add user to groups, "REMOVE" to remove user from groups
+- `group_identifiers` (required): List of group identifiers to add/remove the user from
+
+**Returns:**
+- Success status and operation details
+- Confirmation message with operation performed
+- Username and group identifiers affected
 
 ## Installation
 
@@ -134,6 +192,52 @@ Find liveboards with low usage (less than 10 views)
 ### Content Audit
 ```
 Find all objects that haven't been accessed in the last 30 days
+```
+
+### User Management Examples
+
+### Find All Users
+```
+List all users in the system
+```
+
+### Find Users by Name Pattern
+```
+Find users whose names start with "Bill"
+```
+
+### Find Users in Specific Groups
+```
+Find all users who belong to the "Developers" group
+```
+
+### Group Management Examples
+
+### List All Groups
+```
+List all groups in the system
+```
+
+### List Groups with Users
+```
+List all groups and include the users in each group
+```
+
+### User-Group Management Examples
+
+### Add User to Group
+```
+Add user john.doe@company.com to the "Developers" group
+```
+
+### Remove User from Group
+```
+Remove user john.doe@company.com from the "Analysts" group
+```
+
+### Add User to Multiple Groups
+```
+Add user john.doe@company.com to both "Developers" and "Analysts" groups
 ```
 
 ## Development
